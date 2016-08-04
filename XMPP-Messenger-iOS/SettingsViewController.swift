@@ -34,7 +34,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             if NSUserDefaults.standardUserDefaults().stringForKey(kXMPP.myJID) != "kXMPPmyJID" {
                 username.text = NSUserDefaults.standardUserDefaults().stringForKey(kXMPP.myJID)
                 password.text = NSUserDefaults.standardUserDefaults().stringForKey(kXMPP.myPassword)
-                }
+                } 
         }
     }
 
