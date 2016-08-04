@@ -351,6 +351,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "X.XMPP-Messenger-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -370,6 +371,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "X.XMPP-Messenger-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};

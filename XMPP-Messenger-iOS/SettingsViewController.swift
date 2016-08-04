@@ -10,7 +10,7 @@ import UIKit
 import XMPPFramework
 import xmpp_messenger_ios
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
@@ -19,9 +19,23 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+        let tap = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        if OneChat.sharedInstance.isConnected() {
+            username.hidden = true
+            password.hidden = true
+            validate.setTitle("Disconnect", forState: UIControlState.Normal)
+        } else {
+            if NSUserDefaults.standardUserDefaults().stringForKey(kXMPP.myJID) != "kXMPPmyJID" {
+                username.text = NSUserDefaults.standardUserDefaults().stringForKey(kXMPP.myJID)
+                password.text = NSUserDefaults.standardUserDefaults().stringForKey(kXMPP.myPassword)
+                }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,8 +47,23 @@ class SettingsViewController: UIViewController {
         
     }
     
-
+    func DismissKeyBoard(){
+        if username.isFirstResponder(){
+            username.resignFirstResponder()
+        }else if password.isFirstResponder(){
+            password.resignFirstResponder()
+        }
+    }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if password.isFirstResponder(){
+            textField.resignFirstResponder()
+            validate(self)
+        }else{
+            textField.resignFirstResponder()
+        }
+        return true
+    }
 
     /*
     // MARK: - Navigation
