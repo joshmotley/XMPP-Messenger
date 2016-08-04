@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import xmpp_messenger_ios
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        OneChat.start(delegate: nil) { (stream, error) -> Void in
+            if let _ = error {
+                //handle start errors here
+            } else {
+                //Activate online UI
+            }
+        }
+        
         return true
     }
 
@@ -39,6 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
+        OneChat.stop()
     }
 
 
