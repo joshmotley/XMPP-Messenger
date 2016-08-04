@@ -34,7 +34,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             if NSUserDefaults.standardUserDefaults().stringForKey(kXMPP.myJID) != "kXMPPmyJID" {
                 username.text = NSUserDefaults.standardUserDefaults().stringForKey(kXMPP.myJID)
                 password.text = NSUserDefaults.standardUserDefaults().stringForKey(kXMPP.myPassword)
-                } 
+                }
         }
     }
 
@@ -44,6 +44,25 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func validate(sender: AnyObject) {
+        if OneChat.sharedInstance.isConnected() {
+            OneChat.sharedInstance.disconnect()
+            username.hidden = false
+            password.hidden = false
+            validate.setTitle("Validate", forState: UIControlState.Normal)
+        }else{
+            OneChat.sharedInstance.connect(username: self.username.text!, password: self.password.text!, completionHandler: { (stream, error) -> Void in
+                if let _ = error {
+                    let alertController = UIAlertController(title: "Sorry", message: "An error occured: \(error)", preferredStyle: UIAlertControllerStyle.Alert)
+                    alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+                        
+                    }))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    
+                }else{
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            })
+        }
         
     }
     
