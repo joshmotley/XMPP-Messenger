@@ -67,6 +67,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    @IBAction func dismiss(sender: AnyObject) {
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
     func DismissKeyBoard(){
         if username.isFirstResponder(){
             username.resignFirstResponder()
