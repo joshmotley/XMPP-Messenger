@@ -39,7 +39,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="BLx-fG-MMr">
                             <connections>
-                                <segue destination="CuL-Jn-P4B" kind="show" id="aw9-dg-3Ng"/>
+                                <segue destination="CuL-Jn-P4B" kind="show" identifier="One.HomeToSetting" id="aw9-dg-3Ng"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
