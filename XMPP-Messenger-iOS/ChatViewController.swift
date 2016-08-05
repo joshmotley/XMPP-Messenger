@@ -11,25 +11,20 @@ import xmpp_messenger_ios
 import JSQMessagesViewController
 import XMPPFramework
 
-protocol ContactPickerDelegate {
-    func didSelectContact(recipient: XMPPUserCoreDataStorageObject)
-}
+class ChatViewController: UIViewController, ContactPickerDelegate {
 
-class ChatViewController: UIViewController {
-
+    var recipient : XMPPUserCoreDataStorageObject?
+    var firstTime = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var recipient = XMPPUserCoreDataStorageObject?
         
-        var firstTime = true
-        
-        var delegate:ContactPickerDelegate?
         
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {        
         if let recipient = recipient {
             navigationItem.rightBarButtonItems = []
             navigationItem.title = recipient.displayName
@@ -38,15 +33,22 @@ class ChatViewController: UIViewController {
             navigationItem.setRightBarButtonItem(UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addRecipient"), animated: true)
             
             if firstTime {
-                firstTime = false
+            firstTime = false
             addRecipient()
             }
         }
 
     }
     
+    func didSelectContact(recipient: XMPPUserCoreDataStorageObject) {
+        self.recipient = recipient
+        navigationItem.title = recipient.displayName
+    }
+    
     func addRecipient() {
         let navController = storyboard?.instantiateViewControllerWithIdentifier("contactListNav") as? UINavigationController
+        let contactController: ContactListTableViewController? = navController?.viewControllers[0] as? ContactListTableViewController
+        contactController?.delegate = self
         presentViewController(navController!, animated: true, completion: nil)
     }
 

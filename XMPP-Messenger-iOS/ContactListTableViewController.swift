@@ -10,10 +10,18 @@ import UIKit
 import XMPPFramework
 import xmpp_messenger_ios
 
+protocol ContactPickerDelegate {
+    func didSelectContact(recipient: XMPPUserCoreDataStorageObject)
+}
+
 class ContactListTableViewController: UITableViewController {
 
+    var delegate:ContactPickerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -83,7 +91,11 @@ class ContactListTableViewController: UITableViewController {
         
         return cell!;
     }
-
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        delegate?.didSelectContact(OneRoster.userFromRosterAtIndexPath(indexPath: indexPath))
+        dismiss(self)
+    }
     
     @IBAction func dismiss(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
