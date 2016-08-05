@@ -59,6 +59,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                     self.presentViewController(alertController, animated: true, completion: nil)
                     
                 }else{
+                    print("connected")
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
             })

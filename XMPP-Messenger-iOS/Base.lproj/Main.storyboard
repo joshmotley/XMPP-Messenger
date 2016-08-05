@@ -14,13 +14,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Hy4-hn-MEx">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OpenCellReuse" id="Hy4-hn-MEx">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hy4-hn-MEx" id="nWh-Db-Rxe">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="FcI-dB-SrC" kind="show" identifier="chat.to.chat" id="v75-Oq-Pwd"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -29,7 +32,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="SD0-Zp-pLf">
-                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="heK-wY-pvs"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="heK-wY-pvs">
+                            <connections>
+                                <segue destination="FcI-dB-SrC" kind="show" identifier="chat.to.add" id="Rph-WC-VY7"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="BLx-fG-MMr">
                             <connections>
                                 <segue destination="MwS-kj-BjG" kind="show" id="Su7-4n-hfk"/>
@@ -39,7 +46,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lvl-fa-czc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1125" y="199"/>
+            <point key="canvasLocation" x="409" y="199"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="2zI-P0-ZvX">
@@ -97,7 +104,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5X-ql-9GV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1834" y="199"/>
+            <point key="canvasLocation" x="409" y="985"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0lZ-vu-eph">
@@ -115,7 +122,84 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MtE-2S-CaC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="313" y="199"/>
+            <point key="canvasLocation" x="-301" y="199"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="y95-jJ-h26">
+            <objects>
+                <navigationController storyboardIdentifier="contactListNav" id="0SQ-rC-8IU" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3yp-wG-tRp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="qqb-n7-Kxk" kind="relationship" relationship="rootViewController" id="5Us-eW-uA7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j9P-kN-OK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1735" y="199"/>
+        </scene>
+        <!--Contact List Table View Controller-->
+        <scene sceneID="MVF-8e-LVy">
+            <objects>
+                <tableViewController id="qqb-n7-Kxk" customClass="ContactListTableViewController" customModule="XMPP_Messenger_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="rg9-Wu-iXP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OneCellReuse" id="31i-Hv-6w0">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="31i-Hv-6w0" id="Xw5-jP-Hcf">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="qqb-n7-Kxk" id="fBF-OC-2lq"/>
+                            <outlet property="delegate" destination="qqb-n7-Kxk" id="3Yu-wc-Mat"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="olV-Xg-dc7">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="uLm-dN-JxA">
+                            <connections>
+                                <action selector="dismiss:" destination="qqb-n7-Kxk" id="6YB-KX-9xv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NVi-Ud-DYt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2463" y="199"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="Rkd-qU-eQg">
+            <objects>
+                <viewController id="FcI-dB-SrC" customClass="ChatViewController" customModule="XMPP_Messenger_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZFy-na-Kre"/>
+                        <viewControllerLayoutGuide type="bottom" id="yHX-pT-Yff"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Swc-zF-Eaf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="0SQ-rC-8IU" kind="presentation" identifier="chat.to.contact" id="hnc-5g-2V5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YZM-g5-MKP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1070" y="199"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="v75-Oq-Pwd"/>
+    </inferredMetricsTieBreakers>
 </document>

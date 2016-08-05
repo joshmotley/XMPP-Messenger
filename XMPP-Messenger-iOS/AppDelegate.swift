@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        OneChat.start(delegate: nil) { (stream, error) -> Void in
+        OneChat.start(true, delegate: nil) { (stream, error) -> Void in
             if let _ = error {
                 //handle start errors here
             } else {

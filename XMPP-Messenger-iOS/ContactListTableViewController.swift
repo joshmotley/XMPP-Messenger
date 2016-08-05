@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import XMPPFramework
+import xmpp_messenger_ios
 
 class ContactListTableViewController: UITableViewController {
 
@@ -27,16 +29,66 @@ class ContactListTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        let sections: NSArray? =  OneRoster.buddyList.sections
+        
+        if section < sections!.count {
+            let sectionInfo: AnyObject = sections![section]
+            
+            return sectionInfo.numberOfObjects
+        }
+        
+        return 0;
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return OneRoster.buddyList.sections!.count
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sections: NSArray? = OneRoster.sharedInstance.fetchedResultsController()!.sections
+        
+        if section < sections!.count {
+            let sectionInfo: AnyObject = sections![section]
+            let tmpSection: Int = Int(sectionInfo.name)!
+            
+            switch (tmpSection) {
+            case 0 :
+                return "Available"
+                
+            case 1 :
+                return "Away"
+                
+            default :
+                return "Offline"
+                
+            }
+        }
+        
+        return ""
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("OneCellReuse", forIndexPath: indexPath)
+        let user = OneRoster.userFromRosterAtIndexPath(indexPath: indexPath)
+        
+        cell!.textLabel!.text = user.displayName;
+        
+        if user.unreadMessages.intValue > 0 {
+            cell!.backgroundColor = .orangeColor()
+        } else {
+            cell!.backgroundColor = .whiteColor()
+        }
+        OneChat.sharedInstance.configurePhotoForCell(cell!, user: user)
+        
+        return cell!;
     }
 
+    
+    @IBAction func dismiss(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)

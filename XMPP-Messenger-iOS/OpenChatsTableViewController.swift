@@ -7,11 +7,17 @@
 //
 
 import UIKit
+import XMPPFramework
+import xmpp_messenger_ios
 
-class OpenChatsTableViewController: UITableViewController {
+class OpenChatsTableViewController: UITableViewController, OneRosterDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var chatList = NSArray()
+        
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -19,23 +25,57 @@ class OpenChatsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        OneRoster.sharedInstance.delegate = self
+        
+        OneChat.sharedInstance.connect(username: kXMPP.myJID, password: kXMPP.myPassword) { (stream, error) -> Void in
+            if let _ = error {
+                
+                self.performSegueWithIdentifier("One.HomeToSetting", sender: self)
+            } else {
+                
+                
+            }
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        OneRoster.sharedInstance.delegate = nil
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return OneChats.getChatsList().count
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("OneCellReuse", forIndexPath: indexPath)
+        let user = OneChats.getChatsList().objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
+
+        cell!.textLabel!.text = user.displayName
+        OneChat.sharedInstance.configurePhotoForCell(cell!, user: user)
+        cell?.imageView?.layer.cornerRadius = 24
+        cell?.imageView?.clipsToBounds = true
+        
+        return cell!
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func oneRosterContentChanged(controller: NSFetchedResultsController) {
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
 
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
